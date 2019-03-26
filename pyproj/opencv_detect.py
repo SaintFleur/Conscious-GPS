@@ -343,8 +343,8 @@ def calculateXDistance(image):
 		cX = (np.amax(contour[0]) + np.amin(contour[0])) / 2
 		cY = (np.amax(contour[1]) + np.amin(contour[1])) / 2
 
-		print(str("Image Center: (", center_X, ", ", center_Y, ")"))
-		print(str("Bus Center: (", cX, ", ", cY, ")"))
+		print("Image Center: (" + str(center_X) + ", ", str(center_Y) + ")")
+		print("Bus Center: (" + str(cX) + ", " + str(cY) + ")")
 		distance = center_X	 - cX
 
 		return distance, image_width
