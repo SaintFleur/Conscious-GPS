@@ -335,19 +335,19 @@ def calculateXDistance(image):
 
 	else:
 
-	image_height, image_width, channels = image.shape
+		image_height, image_width, channels = image.shape
 
-	center_X = image_width/2
-	center_Y = image_height/2
+		center_X = image_width/2
+		center_Y = image_height/2
 
-	cX = (np.amax(contour[0]) + np.amin(contour[0])) / 2
-	cY = (np.amax(contour[1]) + np.amin(contour[1])) / 2
+		cX = (np.amax(contour[0]) + np.amin(contour[0])) / 2
+		cY = (np.amax(contour[1]) + np.amin(contour[1])) / 2
 
-	print(str("Image Center: (", center_X, ", ", center_Y, ")"))
-	print(str("Bus Center: (", cX, ", ", cY, ")"))
-	distance = center_X	 - cX
+		print(str("Image Center: (", center_X, ", ", center_Y, ")"))
+		print(str("Bus Center: (", cX, ", ", cY, ")"))
+		distance = center_X	 - cX
 
-	return distance, image_width
+		return distance, image_width
 
 
 # calculateXDistance(cv2.imread("bus.jpg"))
