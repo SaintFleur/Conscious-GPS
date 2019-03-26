@@ -342,7 +342,7 @@ def calculateXDistance(image):
 	print("Bus Center: (", cX, ", ", cY, ")")
 	distance = center_X	 - cX
 
-	return distance
+	return distance, image_width
 
 
 # calculateXDistance(cv2.imread("bus.jpg"))
