@@ -2,7 +2,9 @@ import RPi.GPIO as GPIO
 import time
 from picamera import PiCamera
 from opencv_detect import calculateXDistance
+import sys
 #pin setup
+increment = 6
 
 stp = 2
 dir = 3
@@ -46,20 +48,16 @@ def StepReverseDefualt():
         GPIO.output(stp, GPIO.LOW)
         time.sleep(.001)
 
-
 def  TakePicture(integer):
     string1 = "imagine"
     string2 = ".jpg"
     image = camera.capture(string1 + str(integer) + string2)
     if(image):
-        distance = calculateXDistance(image)
+        distance, image_width = calculateXDistance(image)
         print('picture taken')
-        return distance
+        return distance, image_width
     else:
-        return None
-
-
-
+        return None, None
 
 def rotateCW(x):
     #rotate clockwise
@@ -83,52 +81,71 @@ def rotateCCW(x):
         GPIO.output(stp, GPIO.LOW)
         time.sleep(.001)
 
+def activetrackbusstop():
+    x = 1
+    while x==1:
+        picthentrack(increment)
+        increment++
+        
+    print('Bus stop locked on: Engaging Autopilot.')
+
+def picthentrack(num):
+    distance, image_width = TakePicture(num)
+    if distance:
+        rotation_for_camera(image_width, distance)
+
 def StepperMovement():
     #stepper predetermined motions
-    print(TakePicture(0))
+    picthentrack(0)
     rotateCW(60)
 
-    print(TakePicture(1))
+    picthentrack(1)
     #time.sleep(.5)
-
     rotateCW(60)
 
-    print(TakePicture(2))
+    picthentrack(2)
     #time.sleep(.5)
-
     rotateCCW(180)
 
-    print(TakePicture(3))
-
+    picthentrack(3)
     #time.sleep(.5)
-
     rotateCCW(60)
 
-    print(TakePicture(4))
-
+    picthentrack(4)
     #time.sleep(.5)
-
     rotateCW(120)
-
 
 def TransmitImage():
     #send an image over bluetooth
     print('Transmiting image to ... phone')
 
-def trackstop(inny):
-    if inny > 0:
-        rotateCW(inny)
-    elif inny < 0:
-        rotateCCW(-1*inny)
+def center_of_image(img):
+    width, height = img.shape[:2]
+    print(width)
+    print(height)
+    x = width/2
+    y = height/2
+    return int(x),int(y)
+
+def distance_from_center(center_x, face_x):
+    distance = center_x - face_x
+    print('Distance: ' + str(distance))
+    return distance
+
+def rotation_for_camera(image_width, dfc):
+    ppd = image_width/62
+    d = dfc/ppd
+    rot = math.floor(d/ 1.8)
+    if dfc < 0:
+        print('RotationCCW: ' + str(rot))
+        rotateCCW(int(-1 * rot))
+        return rot
+    elif dfc > 0:
+        print('RotationCW: ' + str(rot))
+        rotateCW(int(rot))
+        return rot
     else:
-        print("centered")
-
-
-def pixtodeg(pix):
-    distance = calculateXDistance
-    deg  = pix
-    return deg
-
+        print('********Centered**********')
 
 print('welcome')
 
