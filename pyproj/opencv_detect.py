@@ -27,32 +27,29 @@ def find_biggest_contour(image):
 	# 	print("None Found")
 	# 	return None
 	# else:
-	biggest_contour=max(contour_sizes,key=lambda x:x[0])[1]
-	mask=np.zeros(image.shape,np.uint8)
+	if(contour_sizes == 0):
+		return None, None
+	else:
+		biggest_contour=max(contour_sizes,key=lambda x:x[0])[1]
+		mask=np.zeros(image.shape,np.uint8)
 
-	cv2.drawContours(mask,[biggest_contour],-1,255,-1)
+		cv2.drawContours(mask,[biggest_contour],-1,255,-1)
 
-	# print("Maximum X Value of Biggest Contour: ", np.amax(biggest_contour[0]))
-	# print("Minimum X Value of Biggest Contour: ", np.amin(biggest_contour[0]))
-	# print("Mid X Point: ", (np.amax(biggest_contour[0]) + np.amin(biggest_contour[0])) / 2)
+		# print("Maximum X Value of Biggest Contour: ", np.amax(biggest_contour[0]))
+		# print("Minimum X Value of Biggest Contour: ", np.amin(biggest_contour[0]))
+		# print("Mid X Point: ", (np.amax(biggest_contour[0]) + np.amin(biggest_contour[0])) / 2)
 
-	# print("Maximum Y Value of Biggest Contour: ", np.amax(biggest_contour[1]))
-	# print("Minimum Y Value of Biggest Contour: ", np.amin(biggest_contour[1]))
-	# print("Mid Y Point: ", (np.amax(biggest_contour[1]) + np.amin(biggest_contour[1])) / 2)
+		# print("Maximum Y Value of Biggest Contour: ", np.amax(biggest_contour[1]))
+		# print("Minimum Y Value of Biggest Contour: ", np.amin(biggest_contour[1]))
+		# print("Mid Y Point: ", (np.amax(biggest_contour[1]) + np.amin(biggest_contour[1])) / 2)
 
+		# cx, cy, area, perimeter = calculate_moments(biggest_contour)
 
-
-
-
-	# cx, cy, area, perimeter = calculate_moments(biggest_contour)
-
-	# print("cx: %s", str(cx))
-	# print("cy: %s", str(cy))
-	# print("area: %s", str(area))
-	# print("perimeter: %s", str(perimter))
-	return biggest_contour,mask
-	# print(np.amax(mask))
-	# return biggest_contour,mask
+		# print("cx: %s", str(cx))
+		# print("cy: %s", str(cy))
+		# print("area: %s", str(area))
+		# print("perimeter: %s", str(perimter))
+		return biggest_contour,mask
 
 def overlay_mask(mask,image):
 	rgb_mask=cv2.cvtColor(mask,cv2.COLOR_GRAY2RGB)
@@ -151,16 +148,18 @@ def draw_bus_stop(image):
 
 	big_contour,mask_fruit=find_biggest_contour(mask_cleaned)
 
+	if(big_contour == None and mask_fruit == None)
+			return None, None
+	else:
+		overlay=overlay_mask(mask_cleaned,image)
 
-	overlay=overlay_mask(mask_cleaned,image)
+		circled=circle_contour(overlay,big_contour)
 
-	circled=circle_contour(overlay,big_contour)
+		#show(circled)
 
-	#show(circled)
+		bgr=cv2.cvtColor(circled,cv2.COLOR_RGB2BGR)
 
-	bgr=cv2.cvtColor(circled,cv2.COLOR_RGB2BGR)
-
-	return bgr, big_contour
+		return bgr, big_contour
 
 
 def calculateDistance(x1,y1,x2,y2):
@@ -328,7 +327,13 @@ def calculateXDistance(image):
 
 	result_image, contour = draw_bus_stop(image)
 
+	if(result_image	== None and contour == None):
+		print("No contour found, distance cannot be calcualed")
+		return None, None
+
 	# contour, _ = find_biggest_contour(result_image)
+
+	else:
 
 	image_height, image_width, channels = image.shape
 
