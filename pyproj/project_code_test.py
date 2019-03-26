@@ -153,6 +153,6 @@ try:
             StepperMovement()
             time.sleep(1)
             print('ready')
-except KeyBoardInterrupt as ky:
-    print(ky)
+except KeyboardInterrupt:
+    print('Josiah you fool')
     GPIO.cleanup()

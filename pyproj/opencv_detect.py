@@ -148,7 +148,7 @@ def draw_bus_stop(image):
 
 	big_contour,mask_fruit=find_biggest_contour(mask_cleaned)
 
-	if(big_contour == None and mask_fruit == None)
+	if(big_contour == None and mask_fruit == None):
 			return None, None
 	else:
 		overlay=overlay_mask(mask_cleaned,image)
