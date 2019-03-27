@@ -85,8 +85,8 @@ def activetrackbusstop():
     x = 1
     while x==1:
         picthentrack(increment)
-        increment++
-        
+        increment+=1
+
     print('Bus stop locked on: Engaging Autopilot.')
 
 def picthentrack(num):
@@ -157,6 +157,6 @@ try:
             StepperMovement()
             time.sleep(1)
             print('ready')
-except KeyBoardInterrupt as ky:
-    print(ky)
+except KeyboardInterrupt:
+    print('Josiah is a fool')
     GPIO.cleanup()
