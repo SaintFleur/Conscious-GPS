@@ -85,7 +85,7 @@ def activetrackbusstop():
     x = 1
     while x==1:
         picthentrack(increment)
-        increment++
+        increment+=1
         
     print('Bus stop locked on: Engaging Autopilot.')
 

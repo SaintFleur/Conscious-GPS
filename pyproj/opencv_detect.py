@@ -125,7 +125,7 @@ def draw_bus_stop(image):
 
 	#Blue Range
 	min_color3=np.array([100,200,130])
-	max_color3=np.array([135,256,20])
+	max_color3=np.array([135,256,200])
 
 	mask3=cv2.inRange(image_blur_hsv,min_color3,max_color3)
 
