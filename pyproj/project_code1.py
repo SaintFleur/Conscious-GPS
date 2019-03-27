@@ -86,7 +86,11 @@ def activetrackbusstop():
     while x==1:
         picthentrack(increment)
         increment+=1
+<<<<<<< HEAD
+        
+=======
 
+>>>>>>> d2135e1d31cebc460a5498d2e555f1581f6c6571
     print('Bus stop locked on: Engaging Autopilot.')
 
 def picthentrack(num):
