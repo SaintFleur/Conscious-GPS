@@ -5,6 +5,7 @@ import math
 import RPi.GPIO as GPIO
 import time
 
+#pins that are being used in the project 
 stp = 2
 dir = 3
 MS1 = 4
@@ -12,6 +13,7 @@ MS2 = 17
 ene = 27
 butt = 22
 
+#GPIO setup code
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(stp, GPIO.OUT)
 GPIO.setup(dir, GPIO.OUT)
@@ -67,6 +69,7 @@ def distance_from_center(center_x, face_x):
     return distance
 
 def rotation_for_camera(image_width, dfc):
+    print('face found :)')
     ppd = image_width/62
     d = dfc/ppd
     rot = math.floor(d/ 1.8)
@@ -83,6 +86,8 @@ def rotation_for_camera(image_width, dfc):
 face_cascade  = cv.CascadeClassifier('haarcascade_frontalface_defualt.xml')
 
 while 1:
+    #this is the main loop for the project code
+    #should go on infinitely till the bus stop is found
     camera.capture('tex.jpg')
     img = cv.imread('tex.jpg')
     gray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
