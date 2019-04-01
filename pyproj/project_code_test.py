@@ -11,6 +11,8 @@ MS1 = 4
 MS2 = 17
 ene = 27
 butt = 22
+homing = 26
+
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(stp, GPIO.OUT)
@@ -27,21 +29,38 @@ GPIO.output(dir, GPIO.LOW)
 
 camera = PiCamera()
 
-def StepForwardDefualt():
+def home():
+    #Homing function to allow the raspberry pi to home itself
+    #Should be called after the bus stop is lost or at the start of the file
+    check = 1;
+    while check:
+        if GPIO.input(swi):
+            #this tells the raspi that the switched has been pressed can be used in the homing code
+            print('The incredible journey has ended')
+            check = 0
+        else:
+            #the button has not been pressed here
+            StepReverseDefualt(1)
+            print('Homeward Bound')
+
+
+    print('Follow the North star')
+
+def StepForwardDefualt(y):
     print('Moving forward at defualt step mode')
     GPIO.output(dir, GPIO.LOW)
 
-    for x in range(30):
+    for x in range(y):
         GPIO.output(stp, GPIO.HIGH)
         time.sleep(.001)
         GPIO.output(stp, GPIO.LOW)
         time.sleep(.001)
 
-def StepReverseDefualt():
+def StepReverseDefualt(y):
     print('Moving in reverse at defualt step mode')
     GPIO.output(dir, GPIO.HIGH)
 
-    for x in range(30):
+    for x in range(y):
         GPIO.output(stp, GPIO.HIGH)
         time.sleep(.001)
         GPIO.output(stp, GPIO.LOW)
@@ -143,9 +162,9 @@ def pixtodeg(pix):
     return deg
 
 
-print('welcome')
-
 try:
+    print('Welcome to the Matrix ')
+    home()
     while 1:
         if GPIO.input(butt):
             xvd = 10
