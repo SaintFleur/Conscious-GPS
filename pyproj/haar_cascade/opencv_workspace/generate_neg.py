@@ -113,5 +113,5 @@ def create_pos_n_neg():
                     f.write(line)
 
 # store_raw_images_from_dir()
-find_uglies()
+# find_uglies()
 create_pos_n_neg()
